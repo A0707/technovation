@@ -1,7 +1,6 @@
-import { Network, Server, Shield, Wifi, Cctv, Cloud, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { c, display, mono, solutions } from "@/lib/tokens";
-
-const ICONS = { Network, Server, Shield, Wifi, Cctv, Cloud };
+import { icon } from "./icons";
 
 export default function Solutions() {
   return (
@@ -14,14 +13,14 @@ export default function Solutions() {
           <a href="#" style={{ background: c.accent, color: c.ink, fontFamily: display }} className="flex items-center gap-2 h-11 px-5 rounded-xl font-bold lift">Parler à un expert <ArrowRight size={17} /></a>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-          {solutions.map((s, i) => {
-            const I = ICONS[s.icon];
+          {solutions.map((s) => {
+            const I = icon(s.icon);
             return (
-              <div key={i} style={{ background: "rgba(255,255,255,.04)", border: "1px solid rgba(255,255,255,.1)" }} className="lift rounded-2xl p-5">
-                <div style={{ background: "rgba(18,181,203,.14)", color: c.primaryBright }} className="w-11 h-11 rounded-xl grid place-items-center">{I && <I size={21} />}</div>
+              <a key={s.href} href={s.href} style={{ background: "rgba(255,255,255,.04)", border: "1px solid rgba(255,255,255,.1)" }} className="lift rounded-2xl p-5 block">
+                <div style={{ background: "rgba(18,181,203,.14)", color: c.primaryBright }} className="w-11 h-11 rounded-xl grid place-items-center"><I size={21} /></div>
                 <div style={{ fontFamily: display }} className="font-bold mt-4">{s.t}</div>
                 <div style={{ color: "#AFC0D2" }} className="text-sm mt-1">{s.d}</div>
-              </div>
+              </a>
             );
           })}
         </div>

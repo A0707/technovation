@@ -2,11 +2,18 @@
 import React, { useState, useEffect } from "react";
 import {
   Search, ShoppingCart, User, Phone, MessageCircle, Menu, X, ChevronDown,
-  ChevronRight, MapPin, Activity, Zap, Network, Server, Shield, Wifi, Cctv, Cloud,
+  ChevronRight, MapPin, Activity, Zap,
 } from "lucide-react";
-import { c, display, mono, solutions } from "@/lib/tokens";
+import { c, display, mono, solutions, contact } from "@/lib/tokens";
+import { icon } from "./icons";
 
-const ICONS = { Network, Server, Shield, Wifi, Cctv, Cloud };
+// Rubriques principales — reprises de l'ancienne navigation technovation.ma.
+const MAIN_NAV = [
+  { t: "Ordinateurs", href: "/categorie/ordinateur-portable" },
+  { t: "Impression", href: "/categorie/imprimante-laser" },
+  { t: "Écrans", href: "/categorie/ecran" },
+  { t: "Accessoires", href: "/categorie/sacoche" },
+];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,9 +31,9 @@ export default function Nav() {
       {/* top bar */}
       <div style={{ background: c.ink, color: "#C7D2DF", fontFamily: mono }} className="hidden md:block text-xs">
         <div className="max-w-7xl mx-auto px-5 h-9 flex items-center justify-between">
-          <span className="flex items-center gap-2"><MapPin size={13} /> 46 Bd Zerktouni, Casablanca • MAROC</span>
+          <span className="flex items-center gap-2"><MapPin size={13} aria-hidden="true" /> {contact.addressShort} • MAROC</span>
           <span className="flex items-center gap-5">
-            <span className="flex items-center gap-1.5"><Phone size={13} /> 06 07 173 005</span>
+            <a href={`tel:+212${contact.phones[0].replace(/\s/g, "").slice(1)}`} className="flex items-center gap-1.5 hover:text-white transition"><Phone size={13} aria-hidden="true" /> {contact.phones[0]}</a>
             <span className="flex items-center gap-1.5"><Activity size={13} style={{ color: c.primaryBright }} /> Support B2B actif</span>
           </span>
         </div>
@@ -47,8 +54,8 @@ export default function Nav() {
             <button onClick={() => setOpenMega(!openMega)} className="px-3 py-2 rounded-lg flex items-center gap-1 hover:bg-gray-50">
               Solutions <ChevronDown size={15} className="opacity-60" />
             </button>
-            {["Ordinateurs", "Réseau & Sécurité", "Impression", "Services"].map((x) => (
-              <a key={x} href="#" className="px-3 py-2 rounded-lg hover:bg-gray-50">{x}</a>
+            {MAIN_NAV.map((x) => (
+              <a key={x.href} href={x.href} className="px-3 py-2 rounded-lg hover:bg-gray-50">{x.t}</a>
             ))}
           </nav>
 
@@ -76,11 +83,11 @@ export default function Nav() {
         {openMega && (
           <div style={{ borderTop: `1px solid ${c.line}`, background: "#fff" }} className="hidden lg:block reveal">
             <div className="max-w-7xl mx-auto px-5 py-6 grid grid-cols-3 gap-6">
-              {solutions.map((s, i) => {
-                const I = ICONS[s.icon];
+              {solutions.map((s) => {
+                const I = icon(s.icon);
                 return (
-                  <a key={i} href="#" className="flex gap-3 p-3 rounded-xl hover:bg-gray-50">
-                    <div style={{ background: c.primarySoft, color: c.primary }} className="w-10 h-10 rounded-lg grid place-items-center shrink-0">{I && <I size={19} />}</div>
+                  <a key={s.href} href={s.href} className="flex gap-3 p-3 rounded-xl hover:bg-gray-50">
+                    <div style={{ background: c.primarySoft, color: c.primary }} className="w-10 h-10 rounded-lg grid place-items-center shrink-0"><I size={19} /></div>
                     <div>
                       <div style={{ fontFamily: display }} className="font-bold text-sm">{s.t}</div>
                       <div style={{ color: c.slate }} className="text-xs mt-0.5">{s.d}</div>
@@ -117,8 +124,8 @@ export default function Nav() {
               <button onClick={() => setMobile(false)} aria-label="Fermer" className="w-9 h-9 grid place-items-center rounded-lg hover:bg-gray-50"><X size={22} /></button>
             </div>
             <nav style={{ fontFamily: display }} className="space-y-1 font-semibold">
-              {["Solutions", "Ordinateurs", "Réseau & Sécurité", "Impression", "Vidéosurveillance", "Services", "Mon compte"].map((x) => (
-                <a key={x} href="#" style={{ borderBottom: `1px solid ${c.line}` }} className="flex items-center justify-between py-3">{x}<ChevronRight size={17} className="opacity-50" /></a>
+              {[...MAIN_NAV, { t: "Toutes les catégories", href: "/categorie" }, { t: "Nos services", href: "/services" }, { t: "Mon compte", href: "/mon-compte" }].map((x) => (
+                <a key={x.href} href={x.href} style={{ borderBottom: `1px solid ${c.line}` }} className="flex items-center justify-between py-3">{x.t}<ChevronRight size={17} className="opacity-50" /></a>
               ))}
             </nav>
             <a href="#" style={{ background: c.accent, color: c.ink, fontFamily: display }} className="mt-6 flex items-center justify-center gap-2 h-12 rounded-xl font-bold">
