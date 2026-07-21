@@ -1,5 +1,5 @@
 import { services } from "@/lib/tokens";
-import { getCategories, getCatalogueSize } from "@/lib/woo";
+import { getCategories, getCatalogueSize, getOnSaleCount } from "@/lib/woo";
 import Counter from "./Counter";
 
 /**
@@ -11,12 +11,17 @@ import Counter from "./Counter";
  * « 24/7 » affiché engage contractuellement. Voir wordpress/CONTENU.md.
  */
 export default async function Stats() {
-  const [categories, size] = await Promise.all([getCategories(), getCatalogueSize()]);
+  const [categories, size, onSale] = await Promise.all([
+    getCategories(),
+    getCatalogueSize(),
+    getOnSaleCount(),
+  ]);
 
   const items = [
-    { value: size, suffix: "", label: "Références en catalogue" },
-    { value: categories.length, suffix: "", label: "Catégories produits" },
-    { value: services.length, suffix: "", label: "Domaines d'expertise" },
+    { value: size, label: "Produits en catalogue" },
+    { value: categories.length, label: "Catégories produits" },
+    { value: services.length, label: "Domaines d'expertise" },
+    { value: onSale, label: "Produits en promotion" },
     { value: "Casablanca", label: "Intervention au Maroc" },
   ].filter((item) => item.value !== null && item.value !== 0);
 
@@ -24,7 +29,7 @@ export default async function Stats() {
 
   return (
     <section className="bg-ink text-white py-12">
-      <div className="max-w-7xl mx-auto px-5 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+      <div className="max-w-7xl mx-auto px-5 grid grid-cols-2 lg:grid-cols-5 gap-8 text-center">
         {items.map((item) => (
           <div key={item.label}>
             <div className="text-3xl lg:text-4xl font-extrabold">

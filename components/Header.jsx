@@ -70,14 +70,26 @@ export default function Header() {
               >
                 {item.label} <ChevronDown size={14} className="opacity-60" />
               </button>
-            ) : (
+            ) : item.href ? (
               <a
                 key={item.label}
                 href={item.href}
+                title={item.pending || undefined}
                 className="px-3 py-2 border-b-2 border-transparent hover:text-primary hover:border-primary transition"
               >
                 {item.label}
               </a>
+            ) : (
+              /* Rubrique prévue par la maquette, page pas encore créée :
+                 l'emplacement est visible mais inerte. */
+              <span
+                key={item.label}
+                title={item.pending}
+                aria-disabled="true"
+                className="px-3 py-2 border-b-2 border-transparent text-slateink/50 cursor-default"
+              >
+                {item.label}
+              </span>
             ),
           )}
         </nav>
@@ -148,11 +160,17 @@ export default function Header() {
             </div>
 
             <nav className="space-y-1 font-semibold">
-              {nav.map((item) => (
-                <a key={item.label} href={item.href} onClick={() => setDrawer(false)} className="flex items-center justify-between py-3 border-b border-line">
-                  {item.label} <ChevronRight size={17} className="opacity-50" />
-                </a>
-              ))}
+              {nav.map((item) =>
+                item.href ? (
+                  <a key={item.label} href={item.href} onClick={() => setDrawer(false)} className="flex items-center justify-between py-3 border-b border-line">
+                    {item.label} <ChevronRight size={17} className="opacity-50" />
+                  </a>
+                ) : (
+                  <span key={item.label} aria-disabled="true" className="flex items-center justify-between py-3 border-b border-line text-slateink/50">
+                    {item.label}
+                  </span>
+                ),
+              )}
             </nav>
 
             <div className="mt-6 space-y-2 text-sm">
