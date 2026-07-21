@@ -2,12 +2,12 @@
 // Une map par composant finissait toujours par diverger de lib/tokens.js.
 import {
   Network, ShieldCheck, Cctv, Fingerprint, Server, Wrench, PhoneCall,
-  PackageCheck, Building2, Users, Headphones, BadgeCheck, Package,
+  PackageCheck, Building2, Users, Headphones, BadgeCheck, Clock, Zap, Package,
 } from "lucide-react";
 
 const REGISTRY = {
   Network, ShieldCheck, Cctv, Fingerprint, Server, Wrench, PhoneCall,
-  PackageCheck, Building2, Users, Headphones, BadgeCheck,
+  PackageCheck, Building2, Users, Headphones, BadgeCheck, Clock, Zap,
 };
 
 /** Renvoie toujours un composant valide — `Package` sert de repli. */

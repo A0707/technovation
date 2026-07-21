@@ -8,17 +8,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#0057FF",
-        "primary-dark": "#0044CC",
-        "primary-bright": "#3B8BFF",
-        "primary-soft": "#E6EEFF",
-        ink: "#081B3A",
-        ink2: "#0F2A55",
-        slateink: "#5B6B82",
-        line: "#E3E8EF",
-        surface: "#F5F7FA",
-        accent: "#FF6A00",
-        "accent-dark": "#E05D00",
+        primary: "#2563EB",
+        "primary-dark": "#1D4ED8",
+        "primary-bright": "#60A5FA",
+        "primary-soft": "#EFF6FF",
+        ink: "#0F172A",
+        ink2: "#1E293B",
+        slateink: "#64748B",
+        line: "#E2E8F0",
+        surface: "#F8FAFC",
+        accent: "#F97316",
+        "accent-dark": "#EA580C",
+        // Nommé `brand-cyan` et non `cyan` : déclarer `cyan` comme couleur
+        // simple écrase l'échelle native de Tailwind, et tous les
+        // `text-cyan-400` du prototype cessent alors de résoudre.
+        "brand-cyan": "#06B6D4",
       },
       borderRadius: { card: "18px" },
       maxWidth: { "7xl": "80rem" },
@@ -26,9 +30,12 @@ module.exports = {
         card: "0 1px 2px rgba(8,27,58,.04), 0 8px 24px rgba(8,27,58,.07)",
         float: "0 12px 40px rgba(8,27,58,.12)",
       },
+      fontFamily: {
+        sans: ["Manrope", "Inter", "system-ui", "sans-serif"],
+      },
       backgroundImage: {
         // Sections en dégradé bleu nuit — hero, bandeau chiffres, CTA, contact.
-        "gradient-ink": "linear-gradient(135deg, #081B3A 0%, #0F2A55 55%, #123A66 100%)",
+        "gradient-ink": "linear-gradient(135deg, #0F172A 0%, #172554 55%, #1E293B 100%)",
       },
       ringWidth: { 3: "3px" },
     },
