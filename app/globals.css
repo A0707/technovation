@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Manrope', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: #0B1220; background: #fff; }
+
+.lift { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.lift:hover { transform: translateY(-4px); box-shadow: 0 16px 40px -18px rgba(11,18,32,.28); }
+
+.grid-dots {
+  background-image: radial-gradient(rgba(255,255,255,.10) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.pulse-bar::after {
+  content: ""; position: absolute; inset: 0; border-radius: 999px;
+  background: linear-gradient(90deg, #12B5CB, #F5A524);
+  width: 40%; animation: slide 3.2s ease-in-out infinite;
+}
+@keyframes slide {
+  0% { transform: translateX(-20%); }
+  50% { transform: translateX(160%); }
+  100% { transform: translateX(-20%); }
+}
+
+.reveal { animation: rise .6s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .lift, .reveal, .pulse-bar::after, html { animation: none !important; transition: none !important; scroll-behavior: auto; }
+}
+
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid #12B5CB; outline-offset: 2px; border-radius: 8px;
+}
