@@ -1,4 +1,9 @@
 import "./globals.css";
+import TopBar from "@/components/TopBar";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { contact } from "@/lib/tokens";
 
 export const metadata = {
   metadataBase: new URL("https://technovation.ma"),
@@ -7,10 +12,10 @@ export const metadata = {
     template: "%s | Technovation",
   },
   description:
-    "Matériel informatique professionnel, infrastructure réseau, cybersécurité, serveurs, vidéosurveillance et maintenance pour les entreprises au Maroc. Marques certifiées HP, Dell, Lenovo, Cisco, Fortinet.",
+    "Matériel informatique professionnel, infrastructure réseau, cybersécurité, vidéosurveillance et maintenance pour les entreprises au Maroc. 346 références en catalogue.",
   keywords: [
     "matériel informatique Maroc", "infrastructure réseau Casablanca",
-    "cybersécurité entreprise", "serveurs", "vidéosurveillance", "Fortinet", "Technovation",
+    "cybersécurité entreprise", "vidéosurveillance", "maintenance informatique", "Technovation",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -20,13 +25,13 @@ export const metadata = {
     siteName: "Technovation",
     title: "Technovation — Partenaire informatique des entreprises",
     description:
-      "Infrastructure, réseau, sécurité, cloud et matériel informatique pour les entreprises au Maroc.",
+      "Infrastructure, réseau, sécurité et matériel informatique pour les entreprises au Maroc.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Technovation — Partenaire informatique des entreprises",
     description:
-      "Infrastructure, réseau, sécurité, cloud et matériel informatique pour les entreprises au Maroc.",
+      "Infrastructure, réseau, sécurité et matériel informatique pour les entreprises au Maroc.",
   },
   robots: { index: true, follow: true },
 };
@@ -36,7 +41,6 @@ const orgSchema = {
   "@type": "Organization",
   name: "Technovation",
   url: "https://technovation.ma",
-  logo: "https://technovation.ma/wp-content/uploads/2020/06/LOGO-SITE.jpg",
   address: {
     "@type": "PostalAddress",
     streetAddress: "46 Bd Zerktouni, 2e étage, Appt N°6",
@@ -45,15 +49,14 @@ const orgSchema = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+212607173005",
+    telephone: contact.phoneIntl,
     contactType: "sales",
     areaServed: "MA",
     availableLanguage: ["fr", "ar"],
   },
-  // Seul le compte Facebook est vérifié (lien présent sur technovation.ma).
-  // Les URL Instagram et LinkedIn précédentes n'existaient pas : un sameAs
-  // erroné dégrade la confiance que Google accorde à l'entité.
-  sameAs: ["https://www.facebook.com/Technovationmaroc/"],
+  // Seul le compte Facebook est vérifié : un sameAs erroné dégrade la confiance
+  // que Google accorde à l'entité.
+  sameAs: [contact.facebook],
 };
 
 export default function RootLayout({ children }) {
@@ -71,7 +74,16 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-ink focus:text-white focus:px-5 focus:py-3 focus:rounded-br-xl focus:font-bold">
+          Aller au contenu principal
+        </a>
+        <TopBar />
+        <Header />
+        <main id="main">{children}</main>
+        <Footer />
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }

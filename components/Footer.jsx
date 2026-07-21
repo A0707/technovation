@@ -25,9 +25,11 @@ export default function Footer() {
         <div>
           <h3 className="font-bold text-white text-sm mb-4">Nos services</h3>
           <ul className="space-y-2.5 text-sm">
+            {/* Les rubriques sans page (Contrôle d'accès, Serveurs & Stockage)
+                renvoient vers /services plutôt que vers une 404. */}
             {services.map((s) => (
-              <li key={s.href}>
-                <a href={s.href} className="hover:text-white transition">{s.title}</a>
+              <li key={s.slug}>
+                <a href={s.href || "/services"} className="hover:text-white transition">{s.title}</a>
               </li>
             ))}
           </ul>

@@ -131,14 +131,17 @@ export default function Header() {
           <div className="max-w-7xl mx-auto px-5 py-6 grid grid-cols-3 gap-4">
             {services.map((s) => {
               const I = icon(s.icon);
+              // Les rubriques sans page renvoient vers /services, pas vers une 404.
               return (
-                <a key={s.href} href={s.href} className="flex gap-3 p-3 rounded-xl hover:bg-surface transition">
+                <a key={s.slug} href={s.href || "/services"} className="flex gap-3 p-3 rounded-xl hover:bg-surface transition">
                   <span className="w-10 h-10 rounded-lg grid place-items-center bg-primary-soft text-primary shrink-0">
                     <I size={19} />
                   </span>
                   <span>
                     <span className="block font-bold text-sm">{s.title}</span>
-                    <span className="block text-xs text-slateink mt-0.5 line-clamp-2">{s.text}</span>
+                    <span className="block text-xs text-slateink mt-0.5 line-clamp-2">
+                      {s.text || "Descriptif à venir"}
+                    </span>
                   </span>
                 </a>
               );
