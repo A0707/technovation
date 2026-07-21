@@ -50,11 +50,10 @@ const orgSchema = {
     areaServed: "MA",
     availableLanguage: ["fr", "ar"],
   },
-  sameAs: [
-    "https://www.facebook.com/Technovation-Maroc-111289120357689/",
-    "https://www.instagram.com/technovation.ma/",
-    "https://www.linkedin.com/company/technovation-maroc",
-  ],
+  // Seul le compte Facebook est vérifié (lien présent sur technovation.ma).
+  // Les URL Instagram et LinkedIn précédentes n'existaient pas : un sameAs
+  // erroné dégrade la confiance que Google accorde à l'entité.
+  sameAs: ["https://www.facebook.com/Technovationmaroc/"],
 };
 
 export default function RootLayout({ children }) {

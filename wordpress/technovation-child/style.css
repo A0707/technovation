@@ -1,0 +1,242 @@
+/*
+Theme Name:   Technovation
+Theme URI:    https://technovation.ma
+Description:  Habillage Technovation — design system B2B appliqué à WooCommerce.
+              Child theme : le thème parent gère la structure, ce fichier gère
+              l'identité visuelle. Aucune modification du parent, donc les mises
+              à jour de sécurité passent sans rien écraser.
+Author:       Technovation
+Template:     blocksy
+Version:      1.0.0
+Text Domain:  technovation
+*/
+
+/* ==========================================================================
+   1. Design tokens — miroir de lib/tokens.js (maquette Next.js)
+   ========================================================================== */
+:root {
+  --tn-ink:           #0B1220;
+  --tn-ink-2:         #111C2E;
+  --tn-slate:         #5B6B82;
+  --tn-line:          #E3E8EF;
+  --tn-bg:            #FFFFFF;
+  --tn-surface:       #F6F8FB;
+  --tn-primary:       #0E8FA3;
+  --tn-primary-bright:#12B5CB;
+  --tn-primary-soft:  #E6F6F9;
+  --tn-accent:        #F5A524;
+  --tn-accent-dark:   #D98A0B;
+  --tn-success:       #16A34A;
+  --tn-danger:        #E11D48;
+
+  --tn-font-display: "Manrope", system-ui, -apple-system, sans-serif;
+  --tn-font-body:    "Inter", system-ui, -apple-system, sans-serif;
+  --tn-font-mono:    "JetBrains Mono", ui-monospace, monospace;
+
+  --tn-radius:    16px;
+  --tn-radius-sm: 12px;
+  --tn-shadow:    0 1px 2px rgba(11, 18, 32, .04), 0 8px 24px rgba(11, 18, 32, .06);
+}
+
+/* ==========================================================================
+   2. Typographie
+   ========================================================================== */
+body {
+  font-family: var(--tn-font-body);
+  color: var(--tn-ink);
+  background: var(--tn-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.woocommerce-loop-product__title,
+.product_title {
+  font-family: var(--tn-font-display);
+  font-weight: 800;
+  letter-spacing: -.01em;
+  color: var(--tn-ink);
+}
+
+.price, .woocommerce-Price-amount {
+  font-family: var(--tn-font-display);
+  font-weight: 800;
+  color: var(--tn-ink);
+}
+
+.sku, .posted_in, .woocommerce-breadcrumb {
+  font-family: var(--tn-font-mono);
+  font-size: .78rem;
+  color: var(--tn-slate);
+}
+
+/* ==========================================================================
+   3. Boutons
+   ========================================================================== */
+.button,
+.wp-element-button,
+button.single_add_to_cart_button,
+.woocommerce a.button,
+.woocommerce button.button {
+  font-family: var(--tn-font-display);
+  font-weight: 700;
+  border-radius: var(--tn-radius-sm);
+  border: 0;
+  background: var(--tn-primary);
+  color: #fff;
+  transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+}
+
+.button:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover {
+  background: var(--tn-primary-bright);
+  transform: translateY(-1px);
+  box-shadow: var(--tn-shadow);
+  color: #fff;
+}
+
+/* CTA secondaire — devis, contact */
+.tn-cta-accent,
+.woocommerce button.button.alt {
+  background: var(--tn-accent);
+  color: var(--tn-ink);
+}
+
+.tn-cta-accent:hover,
+.woocommerce button.button.alt:hover {
+  background: var(--tn-accent-dark);
+  color: var(--tn-ink);
+}
+
+/* Respect de prefers-reduced-motion — accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   4. Cartes produit (boucle boutique et catégories)
+   ========================================================================== */
+ul.products li.product {
+  background: var(--tn-bg);
+  border: 1px solid var(--tn-line);
+  border-radius: var(--tn-radius);
+  overflow: hidden;
+  padding: 0 0 1rem;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+ul.products li.product:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--tn-shadow);
+}
+
+ul.products li.product img {
+  background: var(--tn-surface);
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  padding: 1rem;
+  margin-bottom: .75rem;
+}
+
+ul.products li.product .woocommerce-loop-product__title {
+  font-size: .9rem;
+  line-height: 1.35;
+  padding: 0 1rem;
+  /* Titres catalogue très longs (réf. constructeur) : on plafonne à 3 lignes
+     pour que les cartes de la grille gardent la même hauteur. */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+ul.products li.product .price,
+ul.products li.product .button {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+ul.products li.product del .woocommerce-Price-amount {
+  color: var(--tn-slate);
+  font-weight: 500;
+  font-size: .85em;
+}
+
+ul.products li.product ins {
+  text-decoration: none;
+}
+
+/* Badge promo */
+span.onsale {
+  background: var(--tn-danger);
+  color: #fff;
+  font-family: var(--tn-font-mono);
+  font-size: .7rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: .25rem .5rem;
+  min-height: 0;
+  min-width: 0;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   5. Fiche produit
+   ========================================================================== */
+.single-product div.product .price {
+  font-size: 1.75rem;
+}
+
+.single-product .woocommerce-product-gallery img {
+  border-radius: var(--tn-radius);
+  background: var(--tn-surface);
+}
+
+.stock.in-stock { color: var(--tn-success); font-weight: 600; }
+.stock.out-of-stock { color: var(--tn-slate); font-weight: 600; }
+
+/* ==========================================================================
+   6. Accessibilité — focus visible (absent du thème Adrenalin)
+   ========================================================================== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.button:focus-visible {
+  outline: 3px solid var(--tn-primary-bright);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Lien d'évitement clavier */
+.tn-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  background: var(--tn-ink);
+  color: #fff;
+  padding: .75rem 1.25rem;
+  border-radius: 0 0 var(--tn-radius-sm) 0;
+  font-family: var(--tn-font-display);
+  font-weight: 700;
+}
+
+.tn-skip-link:focus {
+  left: 0;
+}
+
+/* ==========================================================================
+   7. Nettoyage — résidus de l'ancien thème
+   ========================================================================== */
+/* Les shortcodes orphelins [vc_*] sont filtrés côté PHP (functions.php),
+   ce bloc masque les conteneurs vides qu'ils laissent parfois derrière eux. */
+.wpb_wrapper:empty,
+.vc_empty_space:empty {
+  display: none;
+}
