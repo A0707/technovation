@@ -1,49 +1,84 @@
-import { MapPin, Phone, Mail } from "lucide-react";
-import { c, display, mono, solutions, allCategories, legalPages, contact } from "@/lib/tokens";
+import Image from "next/image";
+import { Facebook } from "lucide-react";
+import { site, contact, services, legalPages } from "@/lib/tokens";
 
 export default function Footer() {
-  const cols = [
-    ["Nos services", solutions.map((s) => ({ t: s.t, href: s.href }))],
-    ["Catalogue", allCategories.slice(0, 6).map((x) => ({ t: x.name, href: `/categorie/${x.slug}` }))],
-    ["Informations", legalPages],
-  ];
   return (
-    <footer style={{ background: c.ink, color: "#AFC0D2" }}>
-      <div className="max-w-7xl mx-auto px-5 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-ink text-[#8FA6C0] border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-5 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <div style={{ background: c.primary, color: "#fff", fontFamily: display }} className="w-8 h-8 rounded-lg grid place-items-center font-extrabold">T</div>
-            <span style={{ fontFamily: display, color: "#fff" }} className="font-extrabold">TECHNOVATION</span>
+          <div className="flex items-center gap-2.5 mb-4">
+            <Image
+              src={site.logo}
+              alt={site.name}
+              width={38}
+              height={38}
+              className="rounded-lg object-contain"
+            />
+            <span className="font-extrabold text-white">
+              TECHNO<span className="text-primary-bright">VATION</span>
+            </span>
           </div>
-          <p className="text-sm flex items-start gap-2"><MapPin size={16} className="mt-0.5 shrink-0" aria-hidden="true" /> {contact.address}</p>
-          <p className="text-sm mt-3 flex items-center gap-2">
-            <Phone size={16} aria-hidden="true" />
-            {contact.phones.map((p, i) => (
-              <span key={p}>
-                {i > 0 && <span className="mx-1">·</span>}
-                <a href={`tel:+212${p.replace(/\s/g, "").slice(1)}`} className="hover:text-white transition">{p}</a>
-              </span>
-            ))}
-          </p>
-          <p className="text-sm mt-2 flex items-center gap-2">
-            <Mail size={16} aria-hidden="true" />
-            <a href={`mailto:${contact.email}`} className="hover:text-white transition">{contact.email}</a>
-          </p>
+          <p className="text-sm leading-relaxed">{contact.address}</p>
         </div>
-        {cols.map(([h, items]) => (
-          <div key={h}>
-            <div style={{ fontFamily: display, color: "#fff" }} className="font-bold text-sm mb-4">{h}</div>
-            <ul className="space-y-2.5 text-sm">
-              {items.map((it) => <li key={it.href}><a href={it.href} className="hover:text-white transition">{it.t}</a></li>)}
-            </ul>
-          </div>
-        ))}
+
+        <div>
+          <h3 className="font-bold text-white text-sm mb-4">Nos services</h3>
+          <ul className="space-y-2.5 text-sm">
+            {services.map((s) => (
+              <li key={s.href}>
+                <a href={s.href} className="hover:text-white transition">{s.title}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="font-bold text-white text-sm mb-4">Informations</h3>
+          <ul className="space-y-2.5 text-sm">
+            {legalPages.map((p) => (
+              <li key={p.href}>
+                <a href={p.href} className="hover:text-white transition">{p.t}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="font-bold text-white text-sm mb-4">Nous contacter</h3>
+          <ul className="space-y-2.5 text-sm">
+            <li>
+              <a href={`mailto:${contact.email}`} className="hover:text-white transition">{contact.email}</a>
+            </li>
+            {contact.phones.map((p) => (
+              <li key={p}>
+                <a href={`tel:+212${p.replace(/\s/g, "").slice(1)}`} className="hover:text-white transition">
+                  Tél : {p}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <h3 className="font-bold text-white text-sm mt-6 mb-3">Nous suivre</h3>
+          {/* Seul Facebook est vérifié — voir wordpress/CONTENU.md */}
+          <a
+            href={contact.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Technovation sur Facebook"
+            className="inline-grid place-items-center w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 text-white transition"
+          >
+            <Facebook size={17} />
+          </a>
+        </div>
       </div>
-      <div style={{ borderTop: "1px solid rgba(255,255,255,.1)", fontFamily: mono }} className="text-xs">
-        <div className="max-w-7xl mx-auto px-5 py-5 flex flex-col sm:flex-row justify-between gap-2">
-          <span>© {new Date().getFullYear()} Technovation. Tous droits réservés.</span>
-          <span className="flex gap-4">
-            <a href={contact.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-white">Facebook</a>
+
+      <div className="border-t border-white/10 text-xs">
+        <div className="max-w-7xl mx-auto px-5 py-5 flex flex-col sm:flex-row justify-between gap-3">
+          <span>© {new Date().getFullYear()} Technovation.ma — Tous droits réservés.</span>
+          <span className="flex gap-5">
+            <a href="https://technovation.ma/mentions-legales/" className="hover:text-white transition">Mentions légales</a>
+            <a href="https://technovation.ma/politique-de-confidentialite/" className="hover:text-white transition">Politique de confidentialité</a>
           </span>
         </div>
       </div>

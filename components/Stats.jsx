@@ -1,17 +1,39 @@
-import { c, display, stats } from "@/lib/tokens";
-import { Section } from "./ui";
+import { services } from "@/lib/tokens";
+import { getCategories, getCatalogueSize } from "@/lib/woo";
+import Counter from "./Counter";
 
-export default function Stats() {
+/**
+ * Bandeau chiffres.
+ *
+ * Chaque valeur est lue sur la boutique réelle. Les indicateurs commerciaux de
+ * la maquette de référence (« +500 projets », « +300 clients », « 24/7 ») ne
+ * sont pas repris : Technovation ne les a pas encore justifiés, et un support
+ * « 24/7 » affiché engage contractuellement. Voir wordpress/CONTENU.md.
+ */
+export default async function Stats() {
+  const [categories, size] = await Promise.all([getCategories(), getCatalogueSize()]);
+
+  const items = [
+    { value: size, suffix: "", label: "Références en catalogue" },
+    { value: categories.length, suffix: "", label: "Catégories produits" },
+    { value: services.length, suffix: "", label: "Domaines d'expertise" },
+    { value: "Casablanca", label: "Intervention au Maroc" },
+  ].filter((item) => item.value !== null && item.value !== 0);
+
+  if (!items.length) return null;
+
   return (
-    <Section>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((s, i) => (
-          <div key={i} style={{ border: `1px solid ${c.line}` }} className="rounded-2xl p-6 text-center">
-            <div style={{ fontFamily: display, color: c.primary }} className="text-4xl font-extrabold">{s.k}</div>
-            <div style={{ color: c.slate }} className="text-sm mt-1">{s.l}</div>
+    <section className="bg-ink text-white py-12">
+      <div className="max-w-7xl mx-auto px-5 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        {items.map((item) => (
+          <div key={item.label}>
+            <div className="text-3xl lg:text-4xl font-extrabold">
+              <Counter value={item.value} suffix={item.suffix} />
+            </div>
+            <div className="mt-1 text-sm text-[#A9C0DA]">{item.label}</div>
           </div>
         ))}
       </div>
-    </Section>
+    </section>
   );
 }

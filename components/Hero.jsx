@@ -1,59 +1,110 @@
-import { ArrowRight, Activity, Truck, Headset, BadgeCheck, ShieldCheck } from "lucide-react";
-import { c, display, mono } from "@/lib/tokens";
+"use client";
+import { useRef } from "react";
+import Image from "next/image";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { ArrowRight, ShoppingCart, FileCheck2, Timer, Headphones, Server } from "lucide-react";
+import { site } from "@/lib/tokens";
+
+const BADGES = [
+  { icon: FileCheck2, label: "Devis gratuit" },
+  { icon: Timer, label: "Intervention rapide" },
+  { icon: Headphones, label: "Support professionnel" },
+];
 
 export default function Hero() {
-  return (
-    <section style={{ background: `linear-gradient(150deg, ${c.ink} 0%, ${c.ink2} 55%, #0B2530 100%)`, color: "#fff" }} className="relative overflow-hidden">
-      <div className="absolute inset-0 grid-dots opacity-70" />
-      <div className="max-w-7xl mx-auto px-5 py-16 md:py-20 grid lg:grid-cols-2 gap-12 items-center relative">
-        <div className="reveal">
-          <span style={{ fontFamily: mono, background: "rgba(18,181,203,.12)", color: c.primaryBright, border: "1px solid rgba(18,181,203,.3)" }} className="inline-flex items-center gap-2 text-xs px-3 py-1.5 rounded-full">
-            <Activity size={13} /> Partenaire IT certifié depuis 2013
-          </span>
-          <h1 style={{ fontFamily: display }} className="mt-5 text-4xl md:text-5xl font-extrabold leading-[1.08] tracking-tight">
-            Votre partenaire informatique pour les entreprises
-          </h1>
-          <p style={{ color: "#AFC0D2", fontFamily: mono }} className="mt-4 text-sm md:text-base">
-            Infrastructure • Réseau • Sécurité • Cloud • Matériel
-          </p>
-          <p style={{ color: "#C7D2DF" }} className="mt-3 max-w-lg">
-            Du poste de travail au datacenter : nous équipons, sécurisons et supervisons votre infrastructure avec des marques certifiées et un support de proximité à Casablanca.
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a href="#" style={{ background: c.primaryBright, color: c.ink, fontFamily: display }} className="flex items-center gap-2 h-12 px-6 rounded-xl font-bold lift">
-              Découvrir nos produits <ArrowRight size={18} />
-            </a>
-            <a href="#" style={{ border: "1px solid rgba(255,255,255,.25)", color: "#fff", fontFamily: display }} className="flex items-center gap-2 h-12 px-6 rounded-xl font-bold hover:bg-white/5">
-              Demander un devis
-            </a>
-          </div>
-          <div style={{ color: "#9FB1C4" }} className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-            {[[Truck, "Livraison rapide"], [Headset, "Support technique"], [BadgeCheck, "Garantie"], [ShieldCheck, "Produits certifiés"]].map(([I, t], i) => (
-              <span key={i} className="flex items-center gap-1.5"><I size={16} style={{ color: c.primaryBright }} /> {t}</span>
-            ))}
-          </div>
-        </div>
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
 
-        <div className="reveal">
-          <div style={{ background: "rgba(255,255,255,.04)", border: "1px solid rgba(255,255,255,.12)", backdropFilter: "blur(4px)" }} className="rounded-2xl p-5">
-            <div className="flex items-center justify-between mb-4">
-              <span style={{ fontFamily: mono, color: "#9FB1C4" }} className="text-xs">SUPERVISION — LIVE</span>
-              <span style={{ fontFamily: mono, color: c.success }} className="text-xs flex items-center gap-1.5"><span style={{ background: c.success }} className="w-2 h-2 rounded-full inline-block" /> OPERATIONAL</span>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {[["Disponibilité", "99,98%", c.primaryBright], ["Latence réseau", "8 ms", "#fff"], ["Tickets résolus", "1 240", "#fff"], ["Sites supervisés", "37", c.accent]].map(([l, v, col], i) => (
-                <div key={i} style={{ background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.08)" }} className="rounded-xl p-3">
-                  <div style={{ fontFamily: mono, color: "#8FA3B8" }} className="text-[11px] uppercase">{l}</div>
-                  <div style={{ fontFamily: display, color: col }} className="text-2xl font-extrabold mt-1">{v}</div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4">
-              <div style={{ fontFamily: mono, color: "#8FA3B8" }} className="text-[11px] mb-2 flex justify-between"><span>THROUGHPUT</span><span>OK</span></div>
-              <div style={{ background: "rgba(255,255,255,.1)" }} className="pulse-bar relative h-2 rounded-full overflow-hidden" />
-            </div>
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  // Parallaxe volontairement discrète : au-delà de ~40 px le décalage se lit
+  // comme un défaut d'alignement plutôt que comme de la profondeur.
+  const y = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 40]);
+
+  return (
+    <section ref={ref} className="relative bg-ink text-white overflow-hidden">
+      {/* Trame de points — texture discrète, sans image de fond à charger. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage: "radial-gradient(#fff 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-5 py-14 lg:py-20 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        <motion.div
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <h1 className="text-4xl lg:text-[3.25rem] font-extrabold leading-[1.1]">
+            Solutions Informatiques<br />
+            &amp; Sécurité pour les<br />
+            <span className="text-primary-bright">Entreprises</span> au Maroc
+          </h1>
+
+          <p className="mt-5 text-[#C3D2E4] text-lg max-w-xl">
+            Technovation accompagne les entreprises dans leur transformation
+            digitale grâce à des solutions complètes et sur mesure.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-4">
+            <a
+              href="https://technovation.ma/contactez-nous/"
+              className="inline-flex items-center gap-2 h-12 px-6 rounded-xl bg-primary hover:bg-primary-dark font-bold text-sm uppercase transition"
+            >
+              Demander un devis <ArrowRight size={17} aria-hidden="true" />
+            </a>
+            <a
+              href={`${site.url}/shop/`}
+              className="inline-flex items-center gap-2 h-12 px-6 rounded-xl font-bold text-sm uppercase text-white ring-2 ring-white/85 hover:bg-white hover:text-ink transition"
+            >
+              Découvrir la boutique <ShoppingCart size={17} aria-hidden="true" />
+            </a>
           </div>
-        </div>
+
+          <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3 text-sm text-[#C3D2E4]">
+            {BADGES.map(({ icon: I, label }) => (
+              <li key={label} className="flex items-center gap-2">
+                <I size={16} className="text-primary-bright" aria-hidden="true" />
+                {label}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+
+        <motion.div style={{ y }} className="relative">
+          <div className="relative aspect-[4/3] rounded-card overflow-hidden ring-1 ring-white/10">
+            {site.heroImage ? (
+              <>
+                <Image
+                  src={site.heroImage}
+                  alt="Équipe Technovation en intervention"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                  priority
+                />
+                {/* Voile sombre : garantit le contraste quelle que soit la photo. */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-ink/80 via-ink/40 to-transparent" />
+              </>
+            ) : (
+              /* Emplacement en attente d'une photo de Technovation. Publier une
+                 image de banque en la présentant comme leurs locaux serait
+                 trompeur — voir wordpress/CONTENU.md. */
+              <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-ink2 to-ink">
+                <div className="text-center px-6">
+                  <Server size={44} className="mx-auto text-primary-bright opacity-70" aria-hidden="true" />
+                  <p className="mt-4 text-sm text-[#8FA6C0] max-w-xs">
+                    Emplacement réservé à une photo de vos équipes ou de vos
+                    installations.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
