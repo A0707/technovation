@@ -7,44 +7,47 @@ Description:  Habillage Technovation — design system B2B appliqué à WooComme
               à jour de sécurité passent sans rien écraser.
 Author:       Technovation
 Template:     blocksy
-Version:      1.0.0
+Version:      2.0.0
 Text Domain:  technovation
 */
 
 /* ==========================================================================
-   1. Design tokens — miroir de lib/tokens.js (maquette Next.js)
+   1. Design tokens
    ========================================================================== */
 :root {
-  --tn-ink:           #0B1220;
-  --tn-ink-2:         #111C2E;
+  --tn-ink:           #0A2547; /* navy — hero, bandeau chiffres, footer */
+  --tn-ink-2:         #123A66;
   --tn-slate:         #5B6B82;
   --tn-line:          #E3E8EF;
   --tn-bg:            #FFFFFF;
-  --tn-surface:       #F6F8FB;
-  --tn-primary:       #0E8FA3;
-  --tn-primary-bright:#12B5CB;
-  --tn-primary-soft:  #E6F6F9;
-  --tn-accent:        #F5A524;
-  --tn-accent-dark:   #D98A0B;
+  --tn-surface:       #F5F7FA;
+  --tn-primary:       #1668DC; /* bleu — CTA principal, liens */
+  --tn-primary-bright:#2E8BFF;
+  --tn-primary-soft:  #E8F1FD;
+  --tn-accent:        #F26A21; /* orange — devis, prix */
+  --tn-accent-dark:   #D4560F;
   --tn-success:       #16A34A;
+  --tn-whatsapp:      #25D366;
   --tn-danger:        #E11D48;
 
   --tn-font-display: "Manrope", system-ui, -apple-system, sans-serif;
   --tn-font-body:    "Inter", system-ui, -apple-system, sans-serif;
   --tn-font-mono:    "JetBrains Mono", ui-monospace, monospace;
 
-  --tn-radius:    16px;
-  --tn-radius-sm: 12px;
-  --tn-shadow:    0 1px 2px rgba(11, 18, 32, .04), 0 8px 24px rgba(11, 18, 32, .06);
+  --tn-radius:    14px;
+  --tn-radius-sm: 10px;
+  --tn-shadow:    0 1px 2px rgba(10, 37, 71, .04), 0 8px 24px rgba(10, 37, 71, .07);
+  --tn-shadow-lg: 0 12px 40px rgba(10, 37, 71, .12);
+  --tn-container: 1200px;
 }
 
 /* ==========================================================================
-   2. Typographie
+   2. Base & typographie
    ========================================================================== */
 body {
   font-family: var(--tn-font-body);
   color: var(--tn-ink);
-  background: var(--tn-bg);
+  background: var(--tn-surface);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -53,20 +56,28 @@ h1, h2, h3, h4, h5, h6,
 .product_title {
   font-family: var(--tn-font-display);
   font-weight: 800;
-  letter-spacing: -.01em;
+  letter-spacing: -.015em;
   color: var(--tn-ink);
 }
 
-.price, .woocommerce-Price-amount {
-  font-family: var(--tn-font-display);
-  font-weight: 800;
-  color: var(--tn-ink);
+/* Titre de section centré, façon « NOS EXPERTISES ». */
+.tn-section-title {
+  text-align: center;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  text-transform: uppercase;
+  margin-bottom: .5rem;
 }
 
-.sku, .posted_in, .woocommerce-breadcrumb {
-  font-family: var(--tn-font-mono);
-  font-size: .78rem;
+.tn-section-sub {
+  text-align: center;
   color: var(--tn-slate);
+  margin-bottom: 2.5rem;
+}
+
+.tn-container {
+  max-width: var(--tn-container);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
 }
 
 /* ==========================================================================
@@ -74,41 +85,63 @@ h1, h2, h3, h4, h5, h6,
    ========================================================================== */
 .button,
 .wp-element-button,
-button.single_add_to_cart_button,
 .woocommerce a.button,
-.woocommerce button.button {
+.woocommerce button.button,
+.tn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
   font-family: var(--tn-font-display);
   font-weight: 700;
-  border-radius: var(--tn-radius-sm);
+  font-size: .875rem;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  padding: .8rem 1.5rem;
   border: 0;
+  border-radius: var(--tn-radius-sm);
   background: var(--tn-primary);
   color: #fff;
-  transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
 
 .button:hover,
 .woocommerce a.button:hover,
-.woocommerce button.button:hover {
-  background: var(--tn-primary-bright);
+.woocommerce button.button:hover,
+.tn-btn:hover {
+  background: #1254B4;
+  color: #fff;
   transform: translateY(-1px);
   box-shadow: var(--tn-shadow);
+}
+
+/* CTA « Demander un devis » — orange, la seule couleur chaude de la page. */
+.tn-btn--accent,
+.woocommerce button.button.alt,
+.woocommerce a.button.alt {
+  background: var(--tn-accent);
   color: #fff;
 }
 
-/* CTA secondaire — devis, contact */
-.tn-cta-accent,
-.woocommerce button.button.alt {
-  background: var(--tn-accent);
-  color: var(--tn-ink);
-}
-
-.tn-cta-accent:hover,
-.woocommerce button.button.alt:hover {
+.tn-btn--accent:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce a.button.alt:hover {
   background: var(--tn-accent-dark);
+  color: #fff;
+}
+
+/* CTA secondaire sur fond sombre — contour blanc. */
+.tn-btn--ghost {
+  background: transparent;
+  color: #fff;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .85);
+}
+
+.tn-btn--ghost:hover {
+  background: #fff;
   color: var(--tn-ink);
 }
 
-/* Respect de prefers-reduced-motion — accessibilité */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
@@ -118,47 +151,328 @@ button.single_add_to_cart_button,
 }
 
 /* ==========================================================================
-   4. Cartes produit (boucle boutique et catégories)
+   4. Barre supérieure (adresse, horaires, e-mail, réseaux)
+   ========================================================================== */
+.tn-topbar {
+  background: var(--tn-ink);
+  color: #C3D2E4;
+  font-size: .8rem;
+}
+
+.tn-topbar .tn-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 40px;
+}
+
+.tn-topbar a { color: inherit; }
+.tn-topbar a:hover { color: #fff; }
+.tn-topbar__social { margin-left: auto; display: flex; gap: 1rem; }
+
+@media (max-width: 860px) {
+  .tn-topbar { display: none; }
+}
+
+/* ==========================================================================
+   5. En-tête
+   ========================================================================== */
+.tn-header {
+  background: #fff;
+  border-bottom: 1px solid var(--tn-line);
+}
+
+.tn-header .tn-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-height: 80px;
+}
+
+.tn-logo__name {
+  font-family: var(--tn-font-display);
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -.02em;
+}
+
+.tn-logo__tagline {
+  font-size: .72rem;
+  color: var(--tn-slate);
+  letter-spacing: .04em;
+}
+
+.tn-nav {
+  display: flex;
+  gap: .25rem;
+  font-family: var(--tn-font-display);
+  font-weight: 600;
+  font-size: .875rem;
+  text-transform: uppercase;
+}
+
+.tn-nav a {
+  padding: .5rem .75rem;
+  color: var(--tn-ink);
+  border-bottom: 2px solid transparent;
+}
+
+.tn-nav a:hover,
+.tn-nav .current-menu-item > a {
+  color: var(--tn-primary);
+  border-bottom-color: var(--tn-primary);
+}
+
+.tn-header__phone {
+  margin-left: auto;
+  font-family: var(--tn-font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.tn-header__phone small {
+  display: block;
+  font-weight: 500;
+  font-size: .72rem;
+  color: var(--tn-slate);
+}
+
+/* ==========================================================================
+   6. Hero
+   ========================================================================== */
+.tn-hero {
+  position: relative;
+  background: var(--tn-ink);
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Voile dégradé : garantit le contraste du texte quelle que soit la photo. */
+.tn-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 37, 71, .97) 0%, rgba(10, 37, 71, .85) 45%, rgba(10, 37, 71, .35) 100%);
+  z-index: 1;
+}
+
+.tn-hero > .tn-container {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(3rem, 8vw, 5.5rem);
+  max-width: min(var(--tn-container), 100%);
+}
+
+.tn-hero__title {
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.12;
+  max-width: 16ch;
+}
+
+.tn-hero__title em {
+  font-style: normal;
+  color: var(--tn-primary-bright);
+}
+
+.tn-hero__lead {
+  margin-top: 1.25rem;
+  max-width: 46ch;
+  color: #C3D2E4;
+  font-size: 1.05rem;
+}
+
+.tn-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.tn-hero__trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  font-size: .85rem;
+  color: #C3D2E4;
+}
+
+/* ==========================================================================
+   7. Bandeau réassurance (4 arguments, chevauche le hero)
+   ========================================================================== */
+.tn-assurance {
+  position: relative;
+  z-index: 3;
+  margin-top: -2.5rem;
+  background: #fff;
+  border-radius: var(--tn-radius);
+  box-shadow: var(--tn-shadow-lg);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+.tn-assurance__item { display: flex; align-items: center; gap: .875rem; }
+
+.tn-assurance__icon {
+  flex: 0 0 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--tn-primary-soft);
+  color: var(--tn-primary);
+}
+
+.tn-assurance__label {
+  font-family: var(--tn-font-display);
+  font-weight: 700;
+  font-size: .9rem;
+}
+
+.tn-assurance__desc { font-size: .8rem; color: var(--tn-slate); }
+
+@media (max-width: 980px) { .tn-assurance { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .tn-assurance { grid-template-columns: 1fr; margin-top: -1rem; } }
+
+/* ==========================================================================
+   8. Cartes expertises / services
+   ========================================================================== */
+.tn-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+.tn-card {
+  background: #fff;
+  border: 1px solid var(--tn-line);
+  border-radius: var(--tn-radius);
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.tn-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--tn-shadow);
+  border-color: var(--tn-primary-soft);
+}
+
+.tn-card__icon { color: var(--tn-primary); margin-bottom: 1rem; }
+
+.tn-card__title {
+  font-family: var(--tn-font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: .625rem;
+}
+
+.tn-card__text {
+  font-size: .82rem;
+  color: var(--tn-slate);
+  line-height: 1.6;
+}
+
+.tn-card__link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: var(--tn-font-display);
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--tn-primary);
+}
+
+/* ==========================================================================
+   9. Onglets catalogue (« Nos produits phares »)
+   ========================================================================== */
+.tn-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .25rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--tn-line);
+}
+
+.tn-tabs button {
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: .75rem 1rem;
+  font-family: var(--tn-font-display);
+  font-weight: 600;
+  font-size: .8rem;
+  text-transform: uppercase;
+  color: var(--tn-slate);
+  cursor: pointer;
+}
+
+.tn-tabs button[aria-selected="true"] {
+  color: var(--tn-primary);
+  border-bottom-color: var(--tn-primary);
+}
+
+/* ==========================================================================
+   10. Cartes produit WooCommerce
    ========================================================================== */
 ul.products li.product {
-  background: var(--tn-bg);
+  background: #fff;
   border: 1px solid var(--tn-line);
   border-radius: var(--tn-radius);
   overflow: hidden;
-  padding: 0 0 1rem;
+  padding: 0 0 1.25rem;
+  text-align: center;
   transition: transform .18s ease, box-shadow .18s ease;
 }
 
 ul.products li.product:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow: var(--tn-shadow);
 }
 
 ul.products li.product img {
-  background: var(--tn-surface);
+  background: #fff;
   aspect-ratio: 4 / 3;
   object-fit: contain;
-  padding: 1rem;
-  margin-bottom: .75rem;
+  padding: 1.25rem;
+  margin-bottom: .5rem;
 }
 
 ul.products li.product .woocommerce-loop-product__title {
   font-size: .9rem;
   line-height: 1.35;
   padding: 0 1rem;
-  /* Titres catalogue très longs (réf. constructeur) : on plafonne à 3 lignes
-     pour que les cartes de la grille gardent la même hauteur. */
+  /* Les réf. constructeur sont très longues : on plafonne à 2 lignes pour que
+     toutes les cartes de la grille gardent la même hauteur. */
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-ul.products li.product .price,
-ul.products li.product .button {
-  margin-left: 1rem;
-  margin-right: 1rem;
+/* Ligne de spécifications sous le titre (i7 / 16Go / 512Go SSD / 15.6"). */
+.tn-product__specs {
+  font-size: .78rem;
+  color: var(--tn-slate);
+  padding: .25rem 1rem 0;
 }
+
+ul.products li.product .price {
+  display: block;
+  margin-top: .625rem;
+  font-family: var(--tn-font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--tn-accent);
+}
+
+ul.products li.product .price .woocommerce-Price-amount { color: inherit; }
 
 ul.products li.product del .woocommerce-Price-amount {
   color: var(--tn-slate);
@@ -166,11 +480,8 @@ ul.products li.product del .woocommerce-Price-amount {
   font-size: .85em;
 }
 
-ul.products li.product ins {
-  text-decoration: none;
-}
+ul.products li.product ins { text-decoration: none; }
 
-/* Badge promo */
 span.onsale {
   background: var(--tn-danger);
   color: #fff;
@@ -185,22 +496,189 @@ span.onsale {
 }
 
 /* ==========================================================================
-   5. Fiche produit
+   11. Fiche produit
    ========================================================================== */
 .single-product div.product .price {
-  font-size: 1.75rem;
+  font-size: 1.85rem;
+  color: var(--tn-accent);
+  font-family: var(--tn-font-display);
+  font-weight: 800;
 }
 
 .single-product .woocommerce-product-gallery img {
   border-radius: var(--tn-radius);
-  background: var(--tn-surface);
+  background: #fff;
 }
 
 .stock.in-stock { color: var(--tn-success); font-weight: 600; }
 .stock.out-of-stock { color: var(--tn-slate); font-weight: 600; }
 
+.sku, .posted_in, .woocommerce-breadcrumb {
+  font-family: var(--tn-font-mono);
+  font-size: .78rem;
+  color: var(--tn-slate);
+}
+
 /* ==========================================================================
-   6. Accessibilité — focus visible (absent du thème Adrenalin)
+   12. Partenaires (bandeau logos)
+   ========================================================================== */
+.tn-partners {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding-block: 2rem;
+}
+
+.tn-partners img {
+  max-height: 38px;
+  width: auto;
+  /* Désaturés au repos : les logos constructeurs ont des couleurs très
+     différentes, les laisser bruts fait un patchwork. */
+  filter: grayscale(1);
+  opacity: .65;
+  transition: filter .2s ease, opacity .2s ease;
+}
+
+.tn-partners img:hover { filter: none; opacity: 1; }
+
+/* ==========================================================================
+   13. Bandeau chiffres
+   ========================================================================== */
+.tn-stats {
+  background: var(--tn-ink);
+  color: #fff;
+  padding-block: 2.5rem;
+}
+
+.tn-stats .tn-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.tn-stats__value {
+  font-family: var(--tn-font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  color: #fff;
+}
+
+.tn-stats__label { font-size: .82rem; color: #A9C0DA; }
+
+/* ==========================================================================
+   14. Témoignages
+   ========================================================================== */
+.tn-quotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.tn-quote {
+  background: #fff;
+  border: 1px solid var(--tn-line);
+  border-radius: var(--tn-radius);
+  padding: 1.5rem;
+}
+
+.tn-quote__stars { color: var(--tn-accent); letter-spacing: .1em; }
+
+.tn-quote__text {
+  font-style: italic;
+  font-size: .9rem;
+  line-height: 1.65;
+  margin-block: .875rem;
+}
+
+.tn-quote__author {
+  font-family: var(--tn-font-display);
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--tn-slate);
+}
+
+/* État vide — tant qu'aucun témoignage réel n'est collecté, la section ne
+   s'affiche pas. Voir wordpress/README.md : pas de faux avis. */
+.tn-quotes:empty,
+.tn-quotes:empty + .tn-quotes__dots { display: none; }
+
+/* ==========================================================================
+   15. Bloc contact / pied de page
+   ========================================================================== */
+.tn-contact {
+  background: var(--tn-ink);
+  color: #C3D2E4;
+  padding-block: 3rem;
+}
+
+.tn-contact .tn-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.tn-contact h2 { color: #fff; font-size: 1.5rem; }
+.tn-contact a { color: inherit; }
+.tn-contact a:hover { color: #fff; }
+
+.tn-contact input,
+.tn-contact textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: var(--tn-radius-sm);
+  color: #fff;
+  padding: .7rem .9rem;
+  font-family: inherit;
+  font-size: .875rem;
+}
+
+.tn-contact ::placeholder { color: #8FA6C0; }
+
+.tn-contact input:focus,
+.tn-contact textarea:focus {
+  border-color: var(--tn-primary-bright);
+  outline: none;
+}
+
+@media (max-width: 900px) {
+  .tn-contact .tn-container { grid-template-columns: 1fr; }
+}
+
+.tn-footer-bottom {
+  background: var(--tn-ink);
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  color: #8FA6C0;
+  font-size: .8rem;
+  padding-block: 1rem;
+}
+
+/* ==========================================================================
+   16. Bouton WhatsApp flottant
+   ========================================================================== */
+.tn-whatsapp {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 90;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--tn-whatsapp);
+  color: #fff;
+  box-shadow: var(--tn-shadow-lg);
+}
+
+.tn-whatsapp:hover { transform: scale(1.06); color: #fff; }
+
+/* ==========================================================================
+   17. Accessibilité
    ========================================================================== */
 a:focus-visible,
 button:focus-visible,
@@ -213,7 +691,6 @@ textarea:focus-visible,
   border-radius: 4px;
 }
 
-/* Lien d'évitement clavier */
 .tn-skip-link {
   position: absolute;
   left: -9999px;
@@ -227,16 +704,25 @@ textarea:focus-visible,
   font-weight: 700;
 }
 
-.tn-skip-link:focus {
-  left: 0;
+.tn-skip-link:focus { left: 0; }
+
+/* Réservé aux lecteurs d'écran. */
+.tn-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ==========================================================================
-   7. Nettoyage — résidus de l'ancien thème
+   18. Nettoyage — résidus de l'ancien thème
    ========================================================================== */
 /* Les shortcodes orphelins [vc_*] sont filtrés côté PHP (functions.php),
    ce bloc masque les conteneurs vides qu'ils laissent parfois derrière eux. */
 .wpb_wrapper:empty,
-.vc_empty_space:empty {
-  display: none;
-}
+.vc_empty_space:empty { display: none; }
