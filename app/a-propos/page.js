@@ -1,5 +1,6 @@
-import { MapPin, Mail, Phone, Building2 } from "lucide-react";
-import { contact, company, values } from "@/lib/tokens";
+import Image from "next/image";
+import { MapPin, Mail, Phone, Clock, Truck } from "lucide-react";
+import { contact, company, values, pillars, delivery } from "@/lib/tokens";
 import { icon } from "@/components/icons";
 import { Card } from "@/components/ui/card";
 import PageHeader from "@/components/PageHeader";
@@ -9,7 +10,7 @@ import Reveal from "@/components/Reveal";
 export const metadata = {
   title: "À propos",
   description:
-    "Technovation, votre partenaire IT à Casablanca depuis 2019 : matériel informatique, infrastructure réseau, cybersécurité, vidéosurveillance et maintenance.",
+    "Technovation, votre partenaire IT à Casablanca : matériel et services informatiques pour améliorer le rendement et la productivité des entreprises.",
   alternates: { canonical: "/a-propos" },
 };
 
@@ -17,11 +18,12 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        title="À propos de Technovation"
-        lead={`Votre partenaire IT de confiance à ${company.city} depuis ${company.founded}`}
+        title="À propos de nous"
+        lead={`Votre partenaire IT à ${company.city}`}
         breadcrumb={["À propos"]}
       />
 
+      {/* Texte repris de la page « À propos de nous » de technovation.ma. */}
       <section className="max-w-7xl mx-auto px-5 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
         <Reveal>
           <h2 className="text-2xl lg:text-3xl font-extrabold">Qui sommes-nous ?</h2>
@@ -43,6 +45,71 @@ export default function AboutPage() {
           </div>
         </Reveal>
 
+        <Reveal delay={0.08}>
+          <div className="relative aspect-[4/3] rounded-card overflow-hidden bg-surface">
+            <Image
+              src={company.photo}
+              alt="Technovation"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+              priority
+            />
+          </div>
+        </Reveal>
+      </section>
+
+      {/* Les 4 piliers listés sur la page « À propos de nous ». */}
+      <section className="bg-surface py-16">
+        <div className="max-w-7xl mx-auto px-5">
+          <Reveal>
+            <h2 className="text-2xl lg:text-3xl font-extrabold text-center">Notre accompagnement</h2>
+          </Reveal>
+
+          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {pillars.map((p, i) => {
+              const I = icon(p.icon);
+              return (
+                <Reveal key={p.title} delay={i * 0.06}>
+                  <Card hover className="h-full p-6 text-center">
+                    <span className="w-12 h-12 mx-auto rounded-xl grid place-items-center bg-primary-soft text-primary">
+                      <I size={22} aria-hidden="true" />
+                    </span>
+                    <h3 className="mt-4 font-bold">{p.title}</h3>
+                    <p className="mt-2 text-sm text-slateink leading-relaxed">{p.text}</p>
+                  </Card>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-5 py-16 lg:py-20 grid lg:grid-cols-3 gap-10">
+        <Reveal className="lg:col-span-2">
+          <h2 className="text-2xl font-extrabold">Nos valeurs</h2>
+          <div className="mt-8 grid sm:grid-cols-3 gap-5">
+            {values.map((v) => {
+              const I = icon(v.icon);
+              return (
+                <Card key={v.title} className="h-full p-6 text-center">
+                  <span className="w-12 h-12 mx-auto rounded-full grid place-items-center bg-primary-soft text-primary">
+                    <I size={22} aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-4 font-bold">{v.title}</h3>
+                  <p className="mt-2 text-sm text-slateink leading-relaxed">{v.text}</p>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Repris de la page « Livraison ». */}
+          <p className="mt-8 flex items-start gap-3 text-sm text-slateink">
+            <Truck size={18} className="text-primary shrink-0 mt-0.5" aria-hidden="true" />
+            {delivery}
+          </p>
+        </Reveal>
+
         <Reveal delay={0.1}>
           <Card className="p-7">
             <h2 className="font-bold text-lg">Coordonnées</h2>
@@ -62,37 +129,12 @@ export default function AboutPage() {
                 <a href={`mailto:${contact.email}`} className="hover:text-primary transition">{contact.email}</a>
               </li>
               <li className="flex items-start gap-3">
-                <Building2 size={18} className="text-primary shrink-0 mt-0.5" aria-hidden="true" />
+                <Clock size={18} className="text-primary shrink-0 mt-0.5" aria-hidden="true" />
                 <span className="whitespace-pre-line">{contact.hoursFull}</span>
               </li>
             </ul>
           </Card>
         </Reveal>
-      </section>
-
-      <section className="bg-surface py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-5">
-          <Reveal>
-            <h2 className="text-2xl lg:text-3xl font-extrabold text-center">Nos valeurs</h2>
-          </Reveal>
-
-          <div className="mt-12 grid md:grid-cols-3 gap-6">
-            {values.map((v, i) => {
-              const I = icon(v.icon);
-              return (
-                <Reveal key={v.title} delay={i * 0.06}>
-                  <Card hover className="h-full p-7 text-center">
-                    <span className="w-14 h-14 mx-auto rounded-full grid place-items-center bg-primary-soft text-primary">
-                      <I size={26} aria-hidden="true" />
-                    </span>
-                    <h3 className="mt-4 font-bold text-lg">{v.title}</h3>
-                    <p className="mt-2 text-sm text-slateink leading-relaxed">{v.text}</p>
-                  </Card>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
       </section>
 
       <ContactCta />

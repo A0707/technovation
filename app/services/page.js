@@ -1,4 +1,5 @@
-import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { Check, ArrowRight } from "lucide-react";
 import { services } from "@/lib/tokens";
 import { icon } from "@/components/icons";
 import { Card } from "@/components/ui/card";
@@ -9,68 +10,105 @@ import Reveal from "@/components/Reveal";
 export const metadata = {
   title: "Nos services",
   description:
-    "Infrastructure réseau, cybersécurité, vidéosurveillance, téléphonie IP, vente-installation et maintenance informatique pour les entreprises au Maroc.",
+    "Déploiement d'infrastructure réseau, protection, vidéosurveillance, téléphonie IP, vente-installation et maintenance informatique pour les entreprises au Maroc.",
   alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {
+  const detailed = services.filter((s) => s.image);
+  const compact = services.filter((s) => !s.image);
+
   return (
     <>
       <PageHeader
         title="Nos services"
-        lead="Technovation accompagne les entreprises marocaines sur l'ensemble de leur infrastructure informatique, de l'étude au maintien en condition opérationnelle."
+        lead="Technovation accompagne les entreprises sur l'ensemble de leur infrastructure informatique, de l'étude au maintien en condition opérationnelle."
         breadcrumb={["Services"]}
       />
 
-      <section className="max-w-7xl mx-auto px-5 py-16 lg:py-20">
-        <div className="grid md:grid-cols-2 gap-6">
-          {services.map((s, i) => {
-            const I = icon(s.icon);
-            const ready = Boolean(s.text);
+      {/* Présentation en alternance texte / visuel. */}
+      <section className="max-w-7xl mx-auto px-5 py-16 lg:py-20 space-y-16 lg:space-y-20">
+        {detailed.map((s, i) => {
+          const I = icon(s.icon);
+          const reversed = i % 2 === 1;
 
-            return (
-              <Reveal key={s.slug} delay={i * 0.04}>
-                <Card
-                  hover={ready}
-                  className={`h-full p-7 ${ready ? "" : "border-dashed border-2 bg-white/50"}`}
-                >
-                  <div className="flex gap-5">
-                    <span
-                      className={`w-14 h-14 shrink-0 rounded-2xl grid place-items-center ${
-                        ready ? "bg-primary-soft text-primary" : "bg-surface text-line"
-                      }`}
+          return (
+            <Reveal key={s.slug}>
+              <article className="grid lg:grid-cols-2 gap-10 items-center">
+                <div className={reversed ? "lg:order-2" : ""}>
+                  <span className="w-14 h-14 rounded-xl grid place-items-center bg-primary-soft text-primary">
+                    <I size={26} aria-hidden="true" />
+                  </span>
+                  <h2 className="mt-5 text-2xl font-extrabold">{s.title}</h2>
+                  <p className="mt-4 text-slateink leading-relaxed">{s.text}</p>
+
+                  {s.points.length > 0 && (
+                    <ul className="mt-5 space-y-2.5">
+                      {s.points.map((p) => (
+                        <li key={p} className="flex items-start gap-2.5 text-sm text-slateink">
+                          <Check size={16} className="text-primary shrink-0 mt-0.5" aria-hidden="true" />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {s.href && (
+                    <a
+                      href={s.href}
+                      className="mt-6 inline-flex items-center gap-1.5 text-primary font-bold text-sm hover:gap-2.5 transition-all"
                     >
-                      <I size={26} aria-hidden="true" />
-                    </span>
+                      Consulter la page <ArrowRight size={15} aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
 
-                    <div className="flex-1">
-                      <h2 className="font-bold text-lg">{s.title}</h2>
+                <div className={`relative aspect-[4/3] rounded-card overflow-hidden bg-surface ${reversed ? "lg:order-1" : ""}`}>
+                  <Image
+                    src={s.image}
+                    alt={s.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </article>
+            </Reveal>
+          );
+        })}
+      </section>
 
-                      {ready ? (
-                        <>
-                          <p className="mt-2.5 text-sm text-slateink leading-relaxed">{s.text}</p>
-                          <a
-                            href={s.href}
-                            className="mt-4 inline-flex items-center gap-1.5 text-primary font-bold text-sm hover:gap-2.5 transition-all"
-                          >
+      {/* Prestations sans visuel dédié sur technovation.ma. */}
+      {compact.length > 0 && (
+        <section className="bg-surface py-16">
+          <div className="max-w-7xl mx-auto px-5 grid md:grid-cols-2 gap-6">
+            {compact.map((s, i) => {
+              const I = icon(s.icon);
+              return (
+                <Reveal key={s.slug} delay={i * 0.06}>
+                  <Card hover={Boolean(s.href)} className="h-full p-7">
+                    <div className="flex gap-5">
+                      <span className="w-12 h-12 shrink-0 rounded-xl grid place-items-center bg-primary-soft text-primary">
+                        <I size={22} aria-hidden="true" />
+                      </span>
+                      <div>
+                        <h2 className="font-bold text-lg">{s.title}</h2>
+                        <p className="mt-2 text-sm text-slateink leading-relaxed">{s.text}</p>
+                        {s.href && (
+                          <a href={s.href} className="mt-4 inline-flex items-center gap-1.5 text-primary font-bold text-sm">
                             Consulter la page <ArrowRight size={15} aria-hidden="true" />
                           </a>
-                        </>
-                      ) : (
-                        <p className="mt-2.5 text-sm text-slateink/70 leading-relaxed">
-                          Emplacement réservé — aucune page ne décrit cette prestation
-                          sur technovation.ma. Transmettez-nous le descriptif pour
-                          l&apos;activer.
-                        </p>
-                      )}
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </Card>
-              </Reveal>
-            );
-          })}
-        </div>
-      </section>
+                  </Card>
+                </Reveal>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <ContactCta />
     </>
