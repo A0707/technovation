@@ -1,14 +1,15 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Package, ArrowRight } from "lucide-react";
 import { fmt } from "@/lib/tokens";
 
 function ProductCard({ p }) {
   return (
-    <a
-      href={p.permalink}
+    <Link
+      href={`/boutique/${p.slug}`}
       className="lift group flex flex-col bg-white border border-line rounded-card overflow-hidden text-center"
     >
       <span className="relative block aspect-[4/3] bg-white">
@@ -54,7 +55,7 @@ function ProductCard({ p }) {
           {p.inStock ? "En stock" : "Sur commande"}
         </span>
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -67,7 +68,7 @@ export default function ProductTabs({ tabs, shopUrl }) {
     return (
       <p className="text-center text-slateink">
         Le catalogue est momentanément indisponible.{" "}
-        <a href={shopUrl} className="text-primary font-semibold underline">Voir la boutique</a>
+        <Link href={shopUrl} className="text-primary font-semibold underline">Voir la boutique</Link>
       </p>
     );
   }
@@ -114,12 +115,12 @@ export default function ProductTabs({ tabs, shopUrl }) {
       </AnimatePresence>
 
       <div className="mt-10 text-center">
-        <a
+        <Link
           href={shopUrl}
           className="inline-flex items-center gap-2 h-12 px-7 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-sm uppercase transition"
         >
           Voir toute la boutique <ArrowRight size={16} aria-hidden="true" />
-        </a>
+        </Link>
       </div>
     </>
   );

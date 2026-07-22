@@ -1,10 +1,16 @@
+import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 /**
  * Bandeau de titre des pages intérieures.
- * Reprend le dégradé bleu nuit du hero pour unifier les 7 pages.
+ *
+ * `breadcrumb` accepte des chaînes (`["Services"]`) ou des objets
+ * (`[{ label, href }]`) : seuls les éléments porteurs d'un `href` sont
+ * cliquables, le dernier reste du texte simple.
  */
 export default function PageHeader({ title, lead, breadcrumb = [] }) {
+  const crumbs = breadcrumb.map((c) => (typeof c === "string" ? { label: c } : c));
+
   return (
     <section className="relative bg-gradient-ink text-white overflow-hidden">
       <div
@@ -16,13 +22,17 @@ export default function PageHeader({ title, lead, breadcrumb = [] }) {
         }}
       />
       <div className="relative max-w-7xl mx-auto px-5 py-14 lg:py-20">
-        {breadcrumb.length > 0 && (
-          <nav aria-label="Fil d'Ariane" className="flex items-center gap-1.5 text-xs text-[#A9C0DA] mb-4">
-            <a href="/" className="hover:text-white transition">Accueil</a>
-            {breadcrumb.map((b) => (
-              <span key={b} className="flex items-center gap-1.5">
+        {crumbs.length > 0 && (
+          <nav aria-label="Fil d'Ariane" className="flex flex-wrap items-center gap-1.5 text-xs text-[#A9C0DA] mb-4">
+            <Link href="/" className="hover:text-white transition">Accueil</Link>
+            {crumbs.map((c) => (
+              <span key={c.label} className="flex items-center gap-1.5">
                 <ChevronRight size={13} aria-hidden="true" />
-                <span className="text-white">{b}</span>
+                {c.href ? (
+                  <Link href={c.href} className="hover:text-white transition">{c.label}</Link>
+                ) : (
+                  <span className="text-white">{c.label}</span>
+                )}
               </span>
             ))}
           </nav>

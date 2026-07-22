@@ -1,4 +1,4 @@
-import { productTabs, site } from "@/lib/tokens";
+import { productTabs } from "@/lib/tokens";
 import { getFeaturedTabs } from "@/lib/woo";
 import ProductTabs from "./ProductTabs";
 import Reveal from "./Reveal";
@@ -21,7 +21,7 @@ export default async function Products() {
           </p>
         </Reveal>
 
-        <ProductTabs tabs={tabs} shopUrl={`${site.url}/shop/`} />
+        <ProductTabs tabs={tabs} shopUrl="/boutique" />
       </div>
     </section>
   );

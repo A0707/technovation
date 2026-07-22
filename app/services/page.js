@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
 import { services } from "@/lib/tokens";
 import { icon } from "@/components/icons";
@@ -53,14 +54,12 @@ export default function ServicesPage() {
                     </ul>
                   )}
 
-                  {s.href && (
-                    <a
-                      href={s.href}
-                      className="mt-6 inline-flex items-center gap-1.5 text-primary font-bold text-sm hover:gap-2.5 transition-all"
-                    >
-                      Consulter la page <ArrowRight size={15} aria-hidden="true" />
-                    </a>
-                  )}
+                  <Link
+                    href={s.href}
+                    className="mt-6 inline-flex items-center gap-1.5 text-primary font-bold text-sm hover:gap-2.5 transition-all"
+                  >
+                    En savoir plus <ArrowRight size={15} aria-hidden="true" />
+                  </Link>
                 </div>
 
                 <div className={`relative aspect-[4/3] rounded-card overflow-hidden bg-surface ${reversed ? "lg:order-1" : ""}`}>
@@ -87,7 +86,7 @@ export default function ServicesPage() {
               const I = icon(s.icon);
               return (
                 <Reveal key={s.slug} delay={i * 0.06}>
-                  <Card hover={Boolean(s.href)} className="h-full p-7">
+                  <Card hover className="h-full p-7">
                     <div className="flex gap-5">
                       <span className="w-12 h-12 shrink-0 rounded-xl grid place-items-center bg-primary-soft text-primary">
                         <I size={22} aria-hidden="true" />
@@ -95,11 +94,9 @@ export default function ServicesPage() {
                       <div>
                         <h2 className="font-bold text-lg">{s.title}</h2>
                         <p className="mt-2 text-sm text-slateink leading-relaxed">{s.text}</p>
-                        {s.href && (
-                          <a href={s.href} className="mt-4 inline-flex items-center gap-1.5 text-primary font-bold text-sm">
-                            Consulter la page <ArrowRight size={15} aria-hidden="true" />
-                          </a>
-                        )}
+                        <Link href={s.href} className="mt-4 inline-flex items-center gap-1.5 text-primary font-bold text-sm">
+                          En savoir plus <ArrowRight size={15} aria-hidden="true" />
+                        </Link>
                       </div>
                     </div>
                   </Card>

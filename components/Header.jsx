@@ -110,7 +110,7 @@ export default function Header() {
         </a>
 
         <a
-          href="https://technovation.ma/contactez-nous/"
+          href="/contact"
           className="hidden sm:inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-accent hover:bg-accent-dark text-white font-bold text-sm uppercase transition shrink-0"
         >
           <Zap size={16} aria-hidden="true" /> Demander un devis
@@ -185,7 +185,7 @@ export default function Header() {
             </div>
 
             <a
-              href="https://technovation.ma/contactez-nous/"
+              href="/contact"
               className="mt-6 flex items-center justify-center gap-2 h-12 rounded-xl bg-accent text-white font-bold uppercase text-sm"
             >
               <Zap size={18} aria-hidden="true" /> Demander un devis
