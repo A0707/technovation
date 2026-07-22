@@ -4,9 +4,10 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { contact } from "@/lib/tokens";
+import { SITE_URL, IS_INDEXABLE } from "@/lib/site";
 
 export const metadata = {
-  metadataBase: new URL("https://technovation.ma"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Technovation — Partenaire informatique des entreprises à Casablanca",
     template: "%s | Technovation",
@@ -21,7 +22,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "fr_MA",
-    url: "https://technovation.ma",
+    url: SITE_URL,
     siteName: "Technovation",
     title: "Technovation — Partenaire informatique des entreprises",
     description:
@@ -33,14 +34,18 @@ export const metadata = {
     description:
       "Infrastructure, réseau, sécurité et matériel informatique pour les entreprises au Maroc.",
   },
-  robots: { index: true, follow: true },
+  // Doublon volontaire du header X-Robots-Tag : la balise couvre les robots
+  // qui lisent le HTML sans regarder les en-têtes HTTP.
+  robots: IS_INDEXABLE
+    ? { index: true, follow: true }
+    : { index: false, follow: false },
 };
 
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Technovation",
-  url: "https://technovation.ma",
+  url: SITE_URL,
   address: {
     "@type": "PostalAddress",
     streetAddress: "46 Bd Zerktouni, 2e étage, Appt N°6",
