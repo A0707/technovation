@@ -5,6 +5,8 @@ import { Check, ArrowRight } from "lucide-react";
 import { services } from "@/lib/tokens";
 import { icon } from "@/components/icons";
 import { Card } from "@/components/ui/card";
+import JsonLd from "@/components/JsonLd";
+import { serviceSchema } from "@/lib/schema";
 import PageHeader from "@/components/PageHeader";
 import ContactCta from "@/components/ContactCta";
 import Reveal from "@/components/Reveal";
@@ -37,6 +39,7 @@ export default async function ServicePage({ params }) {
 
   return (
     <>
+      <JsonLd schema={serviceSchema(service)} />
       <PageHeader
         title={service.title}
         lead={service.short}

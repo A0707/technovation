@@ -5,6 +5,8 @@ import { ExternalLink, Package, Phone } from "lucide-react";
 import { fmt, contact } from "@/lib/tokens";
 import { getProductBySlug } from "@/lib/woo";
 import { Button } from "@/components/ui/button";
+import JsonLd from "@/components/JsonLd";
+import { productSchema } from "@/lib/schema";
 import PageHeader from "@/components/PageHeader";
 import ContactCta from "@/components/ContactCta";
 
@@ -34,6 +36,7 @@ export default async function ProductPage({ params }) {
 
   return (
     <>
+      <JsonLd schema={productSchema(product)} />
       <PageHeader
         title={product.name}
         breadcrumb={[

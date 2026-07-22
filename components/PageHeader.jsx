@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import JsonLd from "./JsonLd";
+import { breadcrumbSchema } from "@/lib/schema";
 
 /**
  * Bandeau de titre des pages intérieures.
@@ -13,6 +15,7 @@ export default function PageHeader({ title, lead, breadcrumb = [] }) {
 
   return (
     <section className="relative bg-gradient-ink text-white overflow-hidden">
+      {crumbs.length > 0 && <JsonLd schema={breadcrumbSchema(crumbs)} />}
       <div
         aria-hidden="true"
         className="absolute inset-0 opacity-[0.07]"

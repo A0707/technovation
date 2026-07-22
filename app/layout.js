@@ -3,8 +3,9 @@ import TopBar from "@/components/TopBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { contact } from "@/lib/tokens";
+import JsonLd from "@/components/JsonLd";
 import { SITE_URL, IS_INDEXABLE } from "@/lib/site";
+import { localBusinessSchema } from "@/lib/schema";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -41,29 +42,6 @@ export const metadata = {
     : { index: false, follow: false },
 };
 
-const orgSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Technovation",
-  url: SITE_URL,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "46 Bd Zerktouni, 2e étage, Appt N°6",
-    addressLocality: "Casablanca",
-    addressCountry: "MA",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: contact.phoneIntl,
-    contactType: "sales",
-    areaServed: "MA",
-    availableLanguage: ["fr", "ar"],
-  },
-  // Seul le compte Facebook est vérifié : un sameAs erroné dégrade la confiance
-  // que Google accorde à l'entité.
-  sameAs: [contact.facebook],
-};
-
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
@@ -74,10 +52,7 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
-        />
+        <JsonLd schema={localBusinessSchema()} />
         {/* Sans JavaScript, les blocs animés resteraient masqués : on force
             leur état final. Le contenu prime toujours sur l'animation. */}
         <noscript>
